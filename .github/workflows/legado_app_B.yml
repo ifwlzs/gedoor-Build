@@ -3,6 +3,7 @@ name: LegadoAppB
 on: 
   watch:
     types: [started]
+  workflow_dispatch: 
 env:
   #  Your legado git url
   git_url: 'https://github.com/gedoor/legado.git'
