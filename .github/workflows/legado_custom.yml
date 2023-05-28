@@ -70,7 +70,7 @@ jobs:
       env:
         custom: ${{ github.event.app_custom }}
       run: |
-        echo source $GITHUB_WORKSPACE/diy/$custom
+        source $GITHUB_WORKSPACE/diy/$custom
         
     - name: build  your app
       if: success()
