@@ -86,6 +86,24 @@ jobs:
         name: ${{ env.APP_UPLOAD_NAME }}
         path: ${{ env.APP_UPLOAD }}
 
+    - name: Upload ProPlus To Lanzou
+      env:
+        # 登录蓝奏云后在控制台运行document.cookie
+        ylogin: ${{ secrets.ylogin }}
+        phpdisk_info: ${{ secrets.phpdisk_info }}
+        # 蓝奏云里的文件夹ID
+        LANZOU_FOLDER_ID: ${{ secrets.LANZOU_FOLDER_ID }}
+        path: "/opt/legado/app/build/outputs/apk/app/release/"
+        typeName: "阅读A"
+      if: ${{ env.ylogin }}
+      run: |
+        rm -rf /opt/legado/app/build/outputs/apk/google/release/*.json
+        sudo mv /opt/legado/app/build/outputs/apk/google/release/*.apk /opt/legado/app/build/outputs/apk/google/release/$typeName"_"$APP_TAG.apk
+        python3 $GITHUB_WORKSPACE/.github/scripts/lzy_web.py "$path" "$LANZOU_FOLDER_ID"
+        echo "[$(date -u -d '+8 hour' '+%Y.%m.%d %H:%M:%S')]"
+        pwd
+        tree
+
     - name: upload to webdav
       if: success()
       shell: bash
