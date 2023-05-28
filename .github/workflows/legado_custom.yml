@@ -3,34 +3,21 @@ name: LegadoCustom
 on: 
   watch:
     types: [started]
-    git_url:
-      description: 'Your legado git url'
-      required: true
-      default: 'https://github.com/gedoor/legado.git'
-    git_tag:
-      description: 'Your legado git tag'
-      required: true
-      default: 'master'
-    app_custom:
-      description: 'Your legado custom script'
-      required: true
-      default: 'diy_10bits.sh'
-    app_name:
-      description: 'Legado app name'
-      required: true
-      default: '阅读A'
-    app_suffix:
-      description: 'Legado app suffix'
-      required: true
-      default: 'A'
-    app_launch_name:
-      description: 'Legado app launch name'
-      required: true
-      default: '阅读A'
-    app_rename:
-      description: 'Legado app rename enable'
-      required: true
-      default: 'true'
+env:
+  #  Your legado git url
+  git_url: 'https://github.com/gedoor/legado.git'
+  #  Your legado git tag
+  git_tag: 'master'
+  # Your legado custom script
+  app_custom: 'diy_10bits.sh'
+  # Legado app name
+  app_name: '阅读A'
+  # Legado app suffix
+  app_suffix: 'A'
+  # Legado app launch name
+  app_launch_name: '阅读A'
+  # Legado app rename enable
+  app_rename: 'true'
 
 
 jobs:
@@ -49,16 +36,16 @@ jobs:
     - name: set env
       shell: bash
       env:
-        SECRETS_APP_NAME: ${{ github.event.app_name }}
-        SECRETS_GIT_URL: ${{ github.event.git_url }}
-        SECRETS_SUFFIX: ${{ github.event.app_suffix }}
+        SECRETS_APP_NAME: ${ app_name }
+        SECRETS_GIT_URL: ${ git_url }
+        SECRETS_SUFFIX: ${ app_suffix }
         SECRETS_ENABLE: ${{ secrets.ENABLE }}
         SECRETS_MINIFY: ${{ secrets.MINIFY }}
-        SECRETS_RENAME: ${{ github.event.app_rename }}
+        SECRETS_RENAME: ${ app_rename }
         REPO_OWNER: ${{ github.repository_owner }}
         REPO_ACTOR: ${{ github.actor }}
-        SECRETS_TAG: ${{ github.event.git_tag }}
-        SECRETS_LAUNCH_NAME: ${{ github.event.app_launch_name }}
+        SECRETS_TAG: ${ git_tag }
+        SECRETS_LAUNCH_NAME: ${ app_launch_name }
       run: source $GITHUB_WORKSPACE/action_setenv.sh
     
     - name: clone code
@@ -68,7 +55,7 @@ jobs:
     - name: custom your app
       shell: bash
       env:
-        custom: ${{ github.event.app_custom }}
+        custom: ${ app_custom }
       run: |
         source $GITHUB_WORKSPACE/action_app_custom.sh
         
@@ -104,14 +91,14 @@ jobs:
         pwd
         tree
 
-    - name: upload to webdav
-      if: success()
-      shell: bash
-      env:
-        WEBDAV_URL: ${{ secrets.WEBDAV_URL }}
-        WEBDAV_AUTH: ${{ secrets.WEBDAV_AUTH }}
-        WEBDAV_UPLOAD: ${{ secrets.WEBDAV_UPLOAD }}
-      run: |
-        source $GITHUB_WORKSPACE/action_util.sh
-        webdav_upload $APP_UPLOAD/*.apk
+#    - name: upload to webdav
+#      if: success()
+#      shell: bash
+#      env:
+#        WEBDAV_URL: ${{ secrets.WEBDAV_URL }}
+#        WEBDAV_AUTH: ${{ secrets.WEBDAV_AUTH }}
+#        WEBDAV_UPLOAD: ${{ secrets.WEBDAV_UPLOAD }}
+#      run: |
+#        source $GITHUB_WORKSPACE/action_util.sh
+#        webdav_upload $APP_UPLOAD/*.apk
         
