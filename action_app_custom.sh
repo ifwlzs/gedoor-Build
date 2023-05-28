@@ -19,6 +19,8 @@ function app_rename()
             $APP_WORKSPACE/app/src/main/res/values-zh/strings.xml -i
         sed 's/"app_name">阅读Pro/"app_name">'"$APP_LAUNCH_NAME"'/' \
             $APP_WORKSPACE/app/src/google/res/values-zh-rCN/strings.xml -i
+        sed 's/"receiving_shared_label">阅读/"receiving_shared_label">'"$APP_LAUNCH_NAME"'/' \
+            $APP_WORKSPACE/app/src/main/res/values-zh/strings.xml -i
         debug "更改webdav备份目录legado为legado+后缀名"
         find $APP_WORKSPACE/app/src -regex '.*/storage/.*.kt' -exec \
         sed "s/\${url}legado/&$APP_SUFFIX/" {} -i \;
