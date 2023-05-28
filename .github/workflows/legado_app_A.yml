@@ -7,7 +7,7 @@ env:
   #  Your legado git url
   git_url: 'https://github.com/gedoor/legado.git'
   #  Your legado git tag
-  git_tag: 'master'
+  git_tag: 
   # Your legado custom script
   app_custom: 'diy_10bits.sh'
   # Legado app name
