@@ -13,7 +13,7 @@ on:
       default: 'master'
     app_custom:
       description: 'Your legado custom script'
-      required: false
+      required: true
       default: 'diy_10bits.sh'
     app_name:
       description: 'Legado app name'
@@ -32,18 +32,6 @@ on:
       required: true
       default: 'true'
 
-      webdav_upload: 
-        description: 'Webdav upload when build apk finish'      
-        required: true
-        default: 'false'
-      webdav_url: 
-        description: 'Webdav upload url'      
-        required: true
-        default: 'https://dav.jianguoyun.com/dav/'
-      webdav_auth:
-        description: 'Webdav auth user and password'      
-        required: true 
-        default: 'test@test.com:test_12345'
 
 jobs:
   build_apk:
@@ -70,7 +58,7 @@ jobs:
         REPO_OWNER: ${{ github.repository_owner }}
         REPO_ACTOR: ${{ github.actor }}
         SECRETS_TAG: ${{ github.event.git_tag }}
-        SECRETS_LAUNCH_NAME: ${{ github.event.inputs.app_launch_name }}
+        SECRETS_LAUNCH_NAME: ${{ github.event.app_launch_name }}
       run: source $GITHUB_WORKSPACE/action_setenv.sh
     
     - name: clone code
@@ -82,7 +70,7 @@ jobs:
       env:
         custom: ${{ github.event.app_custom }}
       run: |
-        source $GITHUB_WORKSPACE/diy/$custom
+        echo source $GITHUB_WORKSPACE/diy/$custom
         
     - name: build  your app
       if: success()
