@@ -97,8 +97,8 @@ jobs:
         typeName: "阅读A"
       if: ${{ env.ylogin }}
       run: |
-        rm -rf /opt/legado/app/build/outputs/apk/google/release/*.json
-        sudo mv /opt/legado/app/build/outputs/apk/google/release/*.apk /opt/legado/app/build/outputs/apk/google/release/$typeName"_"$APP_TAG.apk
+        rm -rf /opt/legado/app/build/outputs/apk/app/release/*.json
+        sudo mv /opt/legado/app/build/outputs/apk/app/release/*.apk /opt/legado/app/build/outputs/apk/app/release/$typeName"_"$APP_TAG.apk
         python3 $GITHUB_WORKSPACE/.github/scripts/lzy_web.py "$path" "$LANZOU_FOLDER_ID"
         echo "[$(date -u -d '+8 hour' '+%Y.%m.%d %H:%M:%S')]"
         pwd
