@@ -11,11 +11,11 @@ env:
   # Your legado custom script
   app_custom: 'diy_10bits.sh'
   # Legado app name
-  app_name: '阅读A'
+  app_name: '阅读+'
   # Legado app suffix
-  app_suffix: 'A'
+  app_suffix: 'B'
   # Legado app launch name
-  app_launch_name: '阅读A'
+  app_launch_name: '阅读+'
   # Legado app rename enable
   app_rename: 'true'
 
@@ -81,7 +81,7 @@ jobs:
         # 蓝奏云里的文件夹ID
         LANZOU_FOLDER_ID: ${{ secrets.LANZOU_FOLDER_ID }}
         path: "/opt/legado/app/build/outputs/apk/app/release/"
-        typeName: "阅读A_共存"
+        typeName: "阅读Plus_共存"
       if: ${{ env.ylogin }}
       run: |
         rm -rf /opt/legado/app/build/outputs/apk/app/release/*.json
