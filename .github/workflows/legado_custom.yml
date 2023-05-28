@@ -3,36 +3,35 @@ name: LegadoCustom
 on: 
   watch:
     types: [started]
-  workflow_dispatch:
-    inputs: 
-      git_url: 
-        description: 'Your legado git url'      
-        required: true 
-        default: 'https://github.com/gedoor/legado.git'
-      git_tag:
-        description: 'Your legado git tag'      
-        required: true 
-        default: 'master'
-      app_custom:
-        description: 'Your legado custom script'      
-        required: true 
-        default: 'diy_10bits.sh'
-      app_name: 
-        description: 'Legado app name'      
-        required: true 
-        default: '阅读'
-      app_suffix: 
-        description: 'Legado app suffix'      
-        required: true 
-        default: 'A'
-      app_launch_name: 
-        description: 'Legado app launch name'      
-        required: true 
-        default: '阅读.A'
-      app_rename: 
-        description: 'Legado app rename enable'      
-        required: true 
-        default: 'true'
+    git_url:
+      description: 'Your legado git url'
+      required: true
+      default: 'https://github.com/gedoor/legado.git'
+    git_tag:
+      description: 'Your legado git tag'
+      required: true
+      default: 'master'
+    app_custom:
+      description: 'Your legado custom script'
+      required: false
+      default: 'diy_10bits.sh'
+    app_name:
+      description: 'Legado app name'
+      required: true
+      default: '阅读A'
+    app_suffix:
+      description: 'Legado app suffix'
+      required: true
+      default: 'A'
+    app_launch_name:
+      description: 'Legado app launch name'
+      required: true
+      default: '阅读A'
+    app_rename:
+      description: 'Legado app rename enable'
+      required: true
+      default: 'true'
+
       webdav_upload: 
         description: 'Webdav upload when build apk finish'      
         required: true
@@ -62,15 +61,15 @@ jobs:
     - name: set env
       shell: bash
       env:
-        SECRETS_APP_NAME: ${{ github.event.inputs.app_name }}
-        SECRETS_GIT_URL: ${{ github.event.inputs.git_url }}
-        SECRETS_SUFFIX: ${{ github.event.inputs.app_suffix }}
+        SECRETS_APP_NAME: ${{ github.event.app_name }}
+        SECRETS_GIT_URL: ${{ github.event.git_url }}
+        SECRETS_SUFFIX: ${{ github.event.app_suffix }}
         SECRETS_ENABLE: ${{ secrets.ENABLE }}
         SECRETS_MINIFY: ${{ secrets.MINIFY }}
-        SECRETS_RENAME: ${{ github.event.inputs.app_rename }}
+        SECRETS_RENAME: ${{ github.event.app_rename }}
         REPO_OWNER: ${{ github.repository_owner }}
         REPO_ACTOR: ${{ github.actor }}
-        SECRETS_TAG: ${{ github.event.inputs.git_tag }}
+        SECRETS_TAG: ${{ github.event.git_tag }}
         SECRETS_LAUNCH_NAME: ${{ github.event.inputs.app_launch_name }}
       run: source $GITHUB_WORKSPACE/action_setenv.sh
     
@@ -81,7 +80,7 @@ jobs:
     - name: custom your app
       shell: bash
       env:
-        custom: ${{ github.event.inputs.app_custom }}
+        custom: ${{ github.event.app_custom }}
       run: |
         source $GITHUB_WORKSPACE/diy/$custom
         
@@ -103,9 +102,9 @@ jobs:
       if: success()
       shell: bash
       env:
-        WEBDAV_URL: ${{ github.event.inputs.webdav_url }}
-        WEBDAV_AUTH: ${{ github.event.inputs.webdav_auth }}
-        WEBDAV_UPLOAD: ${{ github.event.inputs.webdav_upload }}
+        WEBDAV_URL: ${{ secrets.WEBDAV_URL }}
+        WEBDAV_AUTH: ${{ secrets.WEBDAV_AUTH }}
+        WEBDAV_UPLOAD: ${{ secrets.WEBDAV_UPLOAD }}
       run: |
         source $GITHUB_WORKSPACE/action_util.sh
         webdav_upload $APP_UPLOAD/*.apk
