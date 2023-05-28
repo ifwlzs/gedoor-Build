@@ -55,7 +55,7 @@ jobs:
     - name: custom your app
       shell: bash
       env:
-        custom: ${ app_custom }
+        custom: ${{ env.app_custom }}
       run: |
         source $GITHUB_WORKSPACE/action_app_custom.sh
         
@@ -66,12 +66,12 @@ jobs:
         source $GITHUB_WORKSPACE/action_app_build.sh
         app_build
 
-    - name: upload artifact
-      uses: actions/upload-artifact@v2
-      if: success()
-      with:
-        name: ${{ env.APP_UPLOAD_NAME }}
-        path: ${{ env.APP_UPLOAD }}
+#    - name: upload artifact
+#      uses: actions/upload-artifact@v2
+#      if: success()
+#      with:
+#        name: ${{ env.APP_UPLOAD_NAME }}
+#        path: ${{ env.APP_UPLOAD }}
 
     - name: Upload ProPlus To Lanzou
       env:
@@ -88,6 +88,7 @@ jobs:
         sudo mv /opt/legado/app/build/outputs/apk/app/release/*.apk /opt/legado/app/build/outputs/apk/app/release/$typeName"_"$APP_TAG.apk
         python3 $GITHUB_WORKSPACE/.github/scripts/lzy_web.py "$path" "$LANZOU_FOLDER_ID"
         echo "[$(date -u -d '+8 hour' '+%Y.%m.%d %H:%M:%S')]"
+        cd /opt/legado/app/build/outputs/
         pwd
         tree
 
