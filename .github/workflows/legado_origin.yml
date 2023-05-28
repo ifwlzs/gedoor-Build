@@ -46,7 +46,7 @@ jobs:
         REPO_ACTOR: ${{ github.actor }}
         SECRETS_TAG: ${{ env.git_tag }}
         SECRETS_LAUNCH_NAME: ${{ env.app_launch_name }}
-      run: source $GITHUB_WORKSPACE/app_customaction_setenv.sh
+      run: source $GITHUB_WORKSPACE/origin_action_setenv.sh
     
     - name: clone code
       shell: bash
@@ -63,7 +63,7 @@ jobs:
       if: success()
       shell: bash
       run: |
-        source $GITHUB_WORKSPACE/app_action_build.sh
+        source $GITHUB_WORKSPACE/origin_action_build.sh
         app_build
 
 #    - name: upload artifact
