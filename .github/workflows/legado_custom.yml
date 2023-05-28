@@ -36,16 +36,16 @@ jobs:
     - name: set env
       shell: bash
       env:
-        SECRETS_APP_NAME: ${ app_name }
-        SECRETS_GIT_URL: ${ git_url }
-        SECRETS_SUFFIX: ${ app_suffix }
+        SECRETS_APP_NAME: ${{ app_name }}
+        SECRETS_GIT_URL: ${{ git_url }}
+        SECRETS_SUFFIX: ${{ app_suffix }}
         SECRETS_ENABLE: ${{ secrets.ENABLE }}
         SECRETS_MINIFY: ${{ secrets.MINIFY }}
-        SECRETS_RENAME: ${ app_rename }
+        SECRETS_RENAME: ${{ app_rename }}
         REPO_OWNER: ${{ github.repository_owner }}
         REPO_ACTOR: ${{ github.actor }}
-        SECRETS_TAG: ${ git_tag }
-        SECRETS_LAUNCH_NAME: ${ app_launch_name }
+        SECRETS_TAG: ${{ git_tag }}
+        SECRETS_LAUNCH_NAME: ${{ app_launch_name }}
       run: source $GITHUB_WORKSPACE/action_setenv.sh
     
     - name: clone code
